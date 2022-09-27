@@ -67,11 +67,10 @@ fn main()
 }
 
 fn text_plot(histogram : &BTreeMap<String, usize>)
-{   
-    let key_strings  = histogram.keys().collect::<Vec<_>>().to_owned();
-    let mut keys = key_strings.into_iter().map(|s| s.as_str()).collect::<Vec<_>>();
+{
+    let mut keys = Vec::from_iter(histogram.keys().map(|k| k.as_str()));
 
-    sort(&mut keys);
+    sort(keys.as_mut_slice());
     for key in keys {
         let count = histogram[key];
         let bars = "#".repeat(count as usize);
