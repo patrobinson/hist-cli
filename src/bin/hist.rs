@@ -5,7 +5,7 @@ use std::collections::BTreeMap;
 use structopt::StructOpt;
 use std::path::PathBuf;
 use std::fs::File;
-use human_sort::sort;
+use lexical_sort::StringSort;
 
 
 #[allow(non_snake_case)]
@@ -70,7 +70,7 @@ fn text_plot(histogram : &BTreeMap<String, usize>)
 {
     let mut keys = Vec::from_iter(histogram.keys().map(|k| k.as_str()));
 
-    sort(keys.as_mut_slice());
+    keys.string_sort_unstable(lexical_sort::natural_lexical_cmp);
     for key in keys {
         let count = histogram[key];
         let bars = "#".repeat(count as usize);
